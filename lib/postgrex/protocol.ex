@@ -214,11 +214,11 @@ defmodule Postgrex.Protocol do
 
   @spec disconnect(Exception.t(), state) :: :ok
   def disconnect(_, s) do
+    cancel_request(s)
     sock_close(s)
     _ = recv_buffer(s)
     delete_parameters(s)
     queries_delete(s)
-    cancel_request(s)
     :ok
   end
 
